@@ -3,9 +3,7 @@ package nyp.sit.movieviewer.basic
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.BaseAdapter
@@ -34,6 +32,18 @@ class SimpleViewListOfMoviesActivity : AppCompatActivity() {
                 detailIntent(position)
             }
         }
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.listmoviemenu, menu)
+        return super.onCreateOptionsMenu(menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if (item?.itemId == R.id.signOut) {
+            finish()
+        }
+        return super.onOptionsItemSelected(item)
     }
 
     fun detailIntent(moviePos: Int) {

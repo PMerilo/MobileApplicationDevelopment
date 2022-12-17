@@ -12,10 +12,14 @@ class SimpleMovieDbHelper(c: Context) : SQLiteOpenHelper(c, DATABASE_NAME, null,
     }
 
     override fun onCreate(db: SQLiteDatabase?) {
+        db!!.execSQL(DATABASE_CREATE)
+        Log.w(MYDBADAPTER_LOG_CAT, "HELPER : DB $DATABASE_TABLE created!")
 
     }
 
     override fun onUpgrade(db: SQLiteDatabase?, oldVersion: Int, newVersion: Int) {
+        db?.execSQL("DROP TABLE IF EXISTS "+ DATABASE_TABLE);
+        onCreate(db)
 
     }
 }

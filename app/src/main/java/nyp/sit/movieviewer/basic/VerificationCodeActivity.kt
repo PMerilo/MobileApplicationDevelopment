@@ -14,7 +14,7 @@ class VerificationCodeActivity : AppCompatActivity() {
 
         verifyBtn.setOnClickListener {
             verifyBtn.error = if (verifyBtn.text.isNullOrBlank()) "Code cannot be empty" else null
-            if (verifyBtn.text == validCode.toString()) {
+            if (verifyEdit.text.toString() == validCode.toString()) {
                 startActivity(Intent(this, LoginActivity::class.java))
             } else {
                 displayToast("Code Error")
