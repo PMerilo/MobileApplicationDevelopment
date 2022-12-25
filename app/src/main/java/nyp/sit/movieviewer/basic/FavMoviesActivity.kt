@@ -3,6 +3,7 @@ package nyp.sit.movieviewer.basic
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.*
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
@@ -13,13 +14,14 @@ import kotlinx.android.synthetic.main.activity_view_list_of_movies.*
 import nyp.sit.movieviewer.basic.data.SimpleMovieSampleData
 import nyp.sit.movieviewer.basic.entity.SimpleMovieItem
 
-class SimpleViewListOfMoviesActivity : AppCompatActivity() {
-    private var movieSampleData = SimpleMovieSampleData
+class FavMoviesActivity : AppCompatActivity() {
+    private var app = MovieViewerApplication.appInstance
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_view_list_of_movies)
-        val movieNameList = movieSampleData.simpleMovieitemArray.mapTo(arrayListOf()) { it.title }
+        val movieNameList = app.retrieveAll(applicationContext).mapTo(arrayListOf()) { it.title }
+        Log.i("Test", movieNameList.toString())
         movielist.adapter = ArrayAdapter(this, android.R.layout.simple_list_item_1, movieNameList)
 
         movielist.onItemClickListener = object : AdapterView.OnItemClickListener {
@@ -32,23 +34,6 @@ class SimpleViewListOfMoviesActivity : AppCompatActivity() {
                 detailIntent(position)
             }
         }
-    }
-
-    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        menuInflater.inflate(R.menu.listmoviemenu, menu)
-        return super.onCreateOptionsMenu(menu)
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when (item.itemId) {
-            R.id.signOut -> {
-                finish()
-            }
-            R.id.viewFav -> {
-                startActivity(Intent(this, FavMoviesActivity::class.java))
-            }
-        }
-        return super.onOptionsItemSelected(item)
     }
 
     fun detailIntent(moviePos: Int) {
